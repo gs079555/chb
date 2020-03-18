@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.jiufukameng.mapper.UserMapper">
+	
+	<!-- 插入用户数据 -->
+	<!-- Integer insert(User user); -->
+	<insert id="insert"
+		useGeneratedKeys="true"
+		keyProperty="id">
+		INSERT INTO pos_user (
+			id,pid,user_login, user_pass,
+			create_time,salt,mobile
+		) VALUES (
+			#{id},#{pid},#{userlogin}, #{userpass},
+			#{createTime},#{salt},#{mobile}			
+		)
+	</insert>
+	
+	<!--Integer updatePassword(@Param("userlogin") String userlogin,@Param("userpass") String userpass)-->
+	<update id="updatePassword">
+		UPDATE
+			pos_user
+		SET
+			user_pass=#{userpass}
+		WHERE
+			user_login=#{userlogin}
+	
+	</update>
+	
+	
+	<!-- 根据用户名查询用户数据-->
+	<!-- User findByid(Integer id)-->
+	<select id="findByid"
+		resultType="com.jiufukameng.entity.User">
+		SELECT 
+			id,pid,user_type AS userType,user_login AS userlogin,
+			create_time AS createTime,user_status AS userStatus,mobile,user_pass AS userpass,user_name AS userNickname,avatar,
+			salt,firstLoginErrorTime,renzheng,erweima,
+			lastLoginErrorTime,loginErrorCount,business_num AS busiQrcode,frozen_state AS frozenState,
+			isLocked,last_login_time AS lastLoginTime,user_agent_id AS userAgentId,is_real AS isReal,
+			idcard,realName
+		FROM 
+			pos_user 
+		WHERE 
+			id=#{id}
+	</select>
+	
+	<!-- 根据用户名查询用户数据-->
+	<!-- User findByuserlogin(String userlogin)-->
+	<select id="findByUserlogin"
+		resultType="com.jiufukameng.entity.User">
+		SELECT 
+			id,pid,user_type AS userType,user_login AS userlogin,
+			create_time AS createTime,user_status AS userStatus,mobile,user_pass AS userpass,user_name AS userNickname,avatar,
+			salt,firstLoginErrorTime,renzheng,erweima,
+			lastLoginErrorTime,loginErrorCount,business_num AS busiQrcode,frozen_state AS frozenState,
+			isLocked,last_login_time AS lastLoginTime,user_agent_id AS userAgentId,is_real AS isReal,
+			idcard,realName
+		FROM 
+			pos_user 
+		WHERE 
+			user_login=#{userlogin}
+	</select>
+	
+	<!-- Integer updateErrorLogin(User user) -->
+	
+		<update id="updateErrorLogin">
+			UPDATE
+				pos_user
+			SET
+				loginErrorCount=#{loginErrorCount},
+				firstLoginErrorTime=#{firstLoginErrorTime},
+				lastLoginErrorTime=#{lastLoginErrorTime},
+				isLocked=#{islocked},last_login_time=#{lastLoginTime}
+			WHERE
+				user_login=#{userlogin}
+		</update>
+	
+
+	<!-- 更新用户基本资料 -->
+	<!-- Integer updateInfo(User user) -->
+	<update id="updateInfo">
+		UPDATE
+			pos_user
+		SET
+			<if test="mobile!=null">
+			mobile=#{mobile},
+			</if>			
+			user_name=#{userNickname},idcard=#{idcard},realName=#{realName}
+		WHERE 
+			user_login=#{userlogin}
+	
+	</update>
+	
+	
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+</mapper>
+
+
+
