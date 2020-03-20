@@ -1,5 +1,7 @@
 package com.jiufukameng.mapper;
 
+import java.util.Date;
+
 import com.jiufukameng.entity.User;
 
 import io.lettuce.core.dynamic.annotation.Param;
@@ -26,8 +28,6 @@ public interface UserMapper {
 	 * @return 匹配的用户数据，如果没有匹配的数据，则返回null
 	 */
 	User findByUserlogin(String userlogin);
-	
-	
 	
 	
 	
@@ -59,7 +59,16 @@ public interface UserMapper {
 	 * @return 
 	 */
 	Integer updateInfo(User user);
-
-
+	
+	/**
+	 * 更新用户的头像
+	 * @param userlogin 用户名
+	 * @param avatar 头像的路径
+	 * @param modifiedUser 修改执行人
+	 * @param modifiedTime 修改时间
+	 * @return 受影响 的行数
+	 */
+	Integer updateAvatar(@Param("userlogin") String userlogin,@Param("avatar") String avatar,@Param("modifiedUser") String modifiedUser,@Param("modifiedTime") Date modifiedTime);
+	
 	
 }

@@ -118,41 +118,47 @@
 			<version>1.2.32</version>
 		</dependency>
 
-      <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-        </dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+		</dependency>
 
-        <!-- https://mvnrepository.com/artifact/com.github.bingoohuang/java-utils -->
-        <dependency>
-            <groupId>com.github.bingoohuang</groupId>
-            <artifactId>java-utils</artifactId>
-            <version>0.0.6</version>
-        </dependency>
+		<!-- https://mvnrepository.com/artifact/com.github.bingoohuang/java-utils -->
+		<dependency>
+			<groupId>com.github.bingoohuang</groupId>
+			<artifactId>java-utils</artifactId>
+			<version>0.0.6</version>
+		</dependency>
 
-        <!-- https://mvnrepository.com/artifact/com.github.bingoohuang/patchca -->
-        <dependency>
-            <groupId>com.github.bingoohuang</groupId>
-            <artifactId>patchca</artifactId>
-            <version>0.0.1</version>
-        </dependency>
+		<!-- https://mvnrepository.com/artifact/com.github.bingoohuang/patchca -->
+		<dependency>
+			<groupId>com.github.bingoohuang</groupId>
+			<artifactId>patchca</artifactId>
+			<version>0.0.1</version>
+		</dependency>
 
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
 
-        <!-- Thymeleaf -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-thymeleaf</artifactId>
-        </dependency>
+		<!-- Thymeleaf -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-thymeleaf</artifactId>
+		</dependency>
 
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-        </dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+		</dependency>
 
+		<!-- 文件上传 -->
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>1.4</version>
+		</dependency>
 
 	</dependencies>
 

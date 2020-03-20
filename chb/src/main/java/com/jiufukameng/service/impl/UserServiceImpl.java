@@ -3,7 +3,9 @@ package com.jiufukameng.service.impl;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -39,17 +41,20 @@ public class UserServiceImpl implements IUserService {
 	@Override
 	public void reg(User user,SmsParams smsParams,HttpServletRequest request)
 			throws UsernameDuplicateException, InsertException, VerifyCodeincorrectException {
+		
+		
 		HttpSession session = request.getSession();
 		 
 		//根据参数user对象中的userlogin属性查询数据：userMapper.findByUsername()
 		String userlogin = user.getUserlogin();
+		Integer pid = user.getId();
 		User result = userMapper.findByUserlogin(userlogin);
 		// 判断查询结果是否不为null（查询结果是存在的）
 		if (result != null) {
 			// 是：用户名已被占用，抛出UsernameDuplicateException
 			throw new UsernameDuplicateException("注册失败！尝试注册的手机号(" + userlogin + ")已经被 占用");
 		}
-		
+		//推荐 人PID
 		Object phones = session.getAttribute("user");
 		Object code = session.getAttribute("code");
 		Object md5VerifyCode = txCloudSmsImpl.getMd5VerifyCode(smsParams.getVerifyCode());
@@ -66,7 +71,7 @@ public class UserServiceImpl implements IUserService {
 //		Date thisErrorTime = format.parse(dateTime);
         //对比一次验证码后将验证码从session中删除
         session.removeAttribute("code");
-       Object codes = session.getAttribute("code");
+        Object codes = session.getAttribute("code");
 		// TODO 得到盐值
 		System.err.println("reg()>>userpass=" + user.getUserpass());
 		String salt = UUID.randomUUID().toString().toUpperCase();
@@ -74,10 +79,12 @@ public class UserServiceImpl implements IUserService {
 		String md5Password = getMd5Password(user.getUserpass(), salt);
 		System.err.println("password==" + user.getUserpass());
 		// TODO 将加密后的密码和盐值封装到user中
+		user.setPid(pid);
 		user.setSalt(salt);
 		user.setCreateTime(date);
 		user.setUserlogin(userlogin);
 		user.setMobile(userlogin);
+		user.setUsername(userlogin);
 		user.setUserpass(md5Password);
 		System.err.println("reg()>>salt=" + salt);
 		System.err.println("reg()>>md5password=" + md5Password);
@@ -228,6 +235,7 @@ public class UserServiceImpl implements IUserService {
 						throw new PasswordNotMatchException("正确录");
 					}
 				}
+				
 			}
 			
 		//设置登录错误错误次数为0
@@ -374,7 +382,35 @@ public class UserServiceImpl implements IUserService {
 		}
 	}
 	
-	
+	@Override
+	public void changeAvatar(String userlogin, String avatar) throws UserNotFoundException, UpdateException {
+		// 根据参数uid查询用户数据
+		User result = userMapper.findByUserlogin(userlogin);
+		System.err.println("result"+result);
+	    // 判断查询结果是否为null
+		if(result==null) {
+			// 抛出：UserNotFoundException
+			throw new UserNotFoundException("头像更新失败！用户不存在1");
+		}
+			
+	    // 判断查询结果中的userStatus为0
+		if(result.getUserStatus()==0) {
+			// 抛出：UserNotFoundException
+			throw new UserNotFoundException("头像更新失败！用户不存在2");
+		}
+	    // 创建当前时间对象
+		Date now = new Date();
+		
+	    // 执行更新头像，并获取返回的受影响的行数
+		Integer rows = userMapper.updateAvatar(userlogin, avatar, result.getUserlogin(), now);
+	    // 判断受影响的行数是否不为1
+		if(rows!=1) {
+			// 抛出：UpdateException
+			throw new UpdateException("修改头像失败，出现未知错误，请联系管理员");
+		}
+		
+		
+	}
 
 	/**
 	 * 对密码进行加密
@@ -390,6 +426,8 @@ public class UserServiceImpl implements IUserService {
 		}
 		return str;
 	}
+
+
 
 
 

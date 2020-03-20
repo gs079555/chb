@@ -11,10 +11,10 @@
 		keyProperty="id">
 		INSERT INTO pos_user (
 			id,pid,user_login, user_pass,
-			create_time,salt,mobile
+			username,create_time,salt,mobile
 		) VALUES (
 			#{id},#{pid},#{userlogin}, #{userpass},
-			#{createTime},#{salt},#{mobile}			
+			#{username},#{createTime},#{salt},#{mobile}			
 		)
 	</insert>
 	
@@ -36,7 +36,7 @@
 		resultType="com.jiufukameng.entity.User">
 		SELECT 
 			id,pid,user_type AS userType,user_login AS userlogin,
-			create_time AS createTime,user_status AS userStatus,mobile,user_pass AS userpass,user_name AS userNickname,avatar,
+			create_time AS createTime,user_status AS userStatus,mobile,user_pass AS userpass,username,avatar,
 			salt,firstLoginErrorTime,renzheng,erweima,
 			lastLoginErrorTime,loginErrorCount,business_num AS busiQrcode,frozen_state AS frozenState,
 			isLocked,last_login_time AS lastLoginTime,user_agent_id AS userAgentId,is_real AS isReal,
@@ -53,7 +53,7 @@
 		resultType="com.jiufukameng.entity.User">
 		SELECT 
 			id,pid,user_type AS userType,user_login AS userlogin,
-			create_time AS createTime,user_status AS userStatus,mobile,user_pass AS userpass,user_name AS userNickname,avatar,
+			create_time AS createTime,user_status AS userStatus,mobile,user_pass AS userpass,username,avatar,
 			salt,firstLoginErrorTime,renzheng,erweima,
 			lastLoginErrorTime,loginErrorCount,business_num AS busiQrcode,frozen_state AS frozenState,
 			isLocked,last_login_time AS lastLoginTime,user_agent_id AS userAgentId,is_real AS isReal,
@@ -88,19 +88,26 @@
 			<if test="mobile!=null">
 			mobile=#{mobile},
 			</if>			
-			user_name=#{userNickname},idcard=#{idcard},realName=#{realName}
+			username=#{username},idcard=#{idcard},realName=#{realName}
 		WHERE 
 			user_login=#{userlogin}
 	
 	</update>
 	
+	<!-- 更新用户的头像 -->
+	<!-- Integer updateAvatar(@Param("userlogin") String userlogin,@Param("avatar") String avatar,@Param("modifiedUser") String modifiedUser,@Param("modifiedTime") Date modifiedTime); -->
 	
+	<update id="updateAvatar">
+		UPDATE
+			pos_user
+		SET
+			avatar=#{avatar},modified_user=#{modifiedUser},
+			modified_time=#{modifiedTime}
+		WHERE
+			user_login=#{userlogin}
 
-	
-	
-	
-	
-	
+	</update>
+
 	
 	
 	

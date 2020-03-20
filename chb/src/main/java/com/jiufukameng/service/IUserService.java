@@ -58,8 +58,29 @@ public interface IUserService {
 	 * @throws VerifyCodeincorrectException 验证码错误异常
 	 */
 	void forgetUserpass(User user,SmsParams smsParams,HttpServletRequest request) throws UserNotFoundException,VerifyCodeincorrectException;
-	
+	/**
+	 * 查询用户ID
+	 * @param id
+	 * @return
+	 */
 	User getByid(Integer id);
-
+	/**
+	 * 更新用户数据
+	 * @param user
+	 * @throws UserNotFoundException
+	 * @throws UpdateException
+	 */
 	void changeInfo(User user) throws UserNotFoundException,UpdateException;
+	
+	/**
+	 * 修改头像
+	 * @param userlogin 用户名
+	 * @param avatar 头像的路径
+	 * @throws UserNotFoundException 用户数据不存在，或者已经被标记为删除
+	 * @throws UpdateException 更新数据失败
+	 */
+	void changeAvatar(String userlogin,String avatar)throws UserNotFoundException,UpdateException;
+	
+	
+	
 }

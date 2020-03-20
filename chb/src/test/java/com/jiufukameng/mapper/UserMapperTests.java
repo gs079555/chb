@@ -21,6 +21,23 @@ public class UserMapperTests {
 
 	
 	@Test
+	public void updateAvatar() {
+		String userlogin = "18764513330";
+		User result = mapper.findByUserlogin(userlogin);
+		User user = new User();
+		String avatar = "/images/img";
+		Date now = new Date();
+		String ues = "超级管理员";
+		user.setModifiedUser(ues);
+		user.setModifiedTime(now);
+		user.setAvatar(avatar);
+		Integer a = mapper.updateAvatar(userlogin, avatar, ues, now);
+		System.out.println("aaaa=="+a);
+	}
+	
+	
+	
+	@Test
 	public void updatePassword() {
 		User user = new User();
 		String userlogin="18764513330";
@@ -76,7 +93,7 @@ public class UserMapperTests {
 		user.setMobile("17705302050");
 		user.setIdcard("37290119880719203X");
 		user.setRealName("王文跃");
-		user.setUserNickname("雨的去向");
+		user.setUsername("雨的去向");
 		Integer rows = mapper.updateInfo(user);
 		System.out.println("rows="+rows);
 	}

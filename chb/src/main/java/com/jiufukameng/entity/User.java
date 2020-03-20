@@ -11,7 +11,7 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 
 @JsonInclude(Include.NON_NULL)
-public class User implements Serializable{
+public class User extends BaseEntity{
 	
 	
 	private static final long serialVersionUID = -2527149704824641888L;
@@ -35,7 +35,7 @@ public class User implements Serializable{
 	private Integer islocked; //是否锁定(0 未锁定,1 锁定)
 	private Date firstLoginErrorTime;//第一次登录错误时间
 	private String yzmCode; //图片验证码
-	private String userNickname; //用户姓名
+	private String username; //用户姓名
 	private String userEmail; //用户登录邮箱
 	private String avatar; //用户头像
 	private String lastLoginIp; //最后登录ip
@@ -73,10 +73,6 @@ public class User implements Serializable{
 	private  String zCommission; //总佣金金额
 	private  String agentpassword; //代理提现审核密码
 	private  String txt; //所有上级id
-	private Date createTime; //注册时间
-	private String createUser; //创建人
-	private String modifiedUser; //修改人
-	private Date modifiedTime; //修改时间
 	public int getId() {
 		return id;
 	}
@@ -191,11 +187,11 @@ public class User implements Serializable{
 	public void setYzmCode(String yzmCode) {
 		this.yzmCode = yzmCode;
 	}
-	public String getUserNickname() {
-		return userNickname;
+	public String getUsername() {
+		return username;
 	}
-	public void setUserNickname(String userNickname) {
-		this.userNickname = userNickname;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 	public String getUserEmail() {
 		return userEmail;
@@ -419,30 +415,6 @@ public class User implements Serializable{
 	public void setTxt(String txt) {
 		this.txt = txt;
 	}
-	public Date getCreateTime() {
-		return createTime;
-	}
-	public void setCreateTime(Date createTime) {
-		this.createTime = createTime;
-	}
-	public String getCreateUser() {
-		return createUser;
-	}
-	public void setCreateUser(String createUser) {
-		this.createUser = createUser;
-	}
-	public String getModifiedUser() {
-		return modifiedUser;
-	}
-	public void setModifiedUser(String modifiedUser) {
-		this.modifiedUser = modifiedUser;
-	}
-	public Date getModifiedTime() {
-		return modifiedTime;
-	}
-	public void setModifiedTime(Date modifiedTime) {
-		this.modifiedTime = modifiedTime;
-	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -456,8 +428,6 @@ public class User implements Serializable{
 		result = prime * result + ((carNum == null) ? 0 : carNum.hashCode());
 		result = prime * result + cardOrderNum;
 		result = prime * result + collegeRankId;
-		result = prime * result + ((createTime == null) ? 0 : createTime.hashCode());
-		result = prime * result + ((createUser == null) ? 0 : createUser.hashCode());
 		result = prime * result + ((erweima == null) ? 0 : erweima.hashCode());
 		result = prime * result + etcRankId;
 		result = prime * result + ((fActivationPrice == null) ? 0 : fActivationPrice.hashCode());
@@ -466,7 +436,7 @@ public class User implements Serializable{
 		result = prime * result + ((frozenBalance == null) ? 0 : frozenBalance.hashCode());
 		result = prime * result + ((frozenState == null) ? 0 : frozenState.hashCode());
 		result = prime * result + highestId;
-		result = prime * result + (int) (id ^ (id >>> 32));
+		result = prime * result + id;
 		result = prime * result + ((idcard == null) ? 0 : idcard.hashCode());
 		result = prime * result + integral;
 		result = prime * result + ((isReal == null) ? 0 : isReal.hashCode());
@@ -477,11 +447,9 @@ public class User implements Serializable{
 		result = prime * result + ((loginErrorCount == null) ? 0 : loginErrorCount.hashCode());
 		result = prime * result + ((mActivationPrice == null) ? 0 : mActivationPrice.hashCode());
 		result = prime * result + ((mobile == null) ? 0 : mobile.hashCode());
-		result = prime * result + ((modifiedTime == null) ? 0 : modifiedTime.hashCode());
-		result = prime * result + ((modifiedUser == null) ? 0 : modifiedUser.hashCode());
 		result = prime * result + ((more == null) ? 0 : more.hashCode());
 		result = prime * result + partnerNum;
-		result = prime * result + (int) (pid ^ (pid >>> 32));
+		result = prime * result + pid;
 		result = prime * result + ((poster == null) ? 0 : poster.hashCode());
 		result = prime * result + ((quickQrcode == null) ? 0 : quickQrcode.hashCode());
 		result = prime * result + ((realName == null) ? 0 : realName.hashCode());
@@ -497,10 +465,10 @@ public class User implements Serializable{
 		result = prime * result + userAgentId;
 		result = prime * result + ((userEmail == null) ? 0 : userEmail.hashCode());
 		result = prime * result + ((userModel == null) ? 0 : userModel.hashCode());
-		result = prime * result + ((userNickname == null) ? 0 : userNickname.hashCode());
 		result = prime * result + userStatus;
 		result = prime * result + userType;
 		result = prime * result + ((userlogin == null) ? 0 : userlogin.hashCode());
+		result = prime * result + ((username == null) ? 0 : username.hashCode());
 		result = prime * result + ((userpass == null) ? 0 : userpass.hashCode());
 		result = prime * result + (int) (vipRankId ^ (vipRankId >>> 32));
 		result = prime * result + ((yzmCode == null) ? 0 : yzmCode.hashCode());
@@ -554,16 +522,6 @@ public class User implements Serializable{
 		if (cardOrderNum != other.cardOrderNum)
 			return false;
 		if (collegeRankId != other.collegeRankId)
-			return false;
-		if (createTime == null) {
-			if (other.createTime != null)
-				return false;
-		} else if (!createTime.equals(other.createTime))
-			return false;
-		if (createUser == null) {
-			if (other.createUser != null)
-				return false;
-		} else if (!createUser.equals(other.createUser))
 			return false;
 		if (erweima == null) {
 			if (other.erweima != null)
@@ -645,16 +603,6 @@ public class User implements Serializable{
 				return false;
 		} else if (!mobile.equals(other.mobile))
 			return false;
-		if (modifiedTime == null) {
-			if (other.modifiedTime != null)
-				return false;
-		} else if (!modifiedTime.equals(other.modifiedTime))
-			return false;
-		if (modifiedUser == null) {
-			if (other.modifiedUser != null)
-				return false;
-		} else if (!modifiedUser.equals(other.modifiedUser))
-			return false;
 		if (more == null) {
 			if (other.more != null)
 				return false;
@@ -718,11 +666,6 @@ public class User implements Serializable{
 				return false;
 		} else if (!userModel.equals(other.userModel))
 			return false;
-		if (userNickname == null) {
-			if (other.userNickname != null)
-				return false;
-		} else if (!userNickname.equals(other.userNickname))
-			return false;
 		if (userStatus != other.userStatus)
 			return false;
 		if (userType != other.userType)
@@ -731,6 +674,11 @@ public class User implements Serializable{
 			if (other.userlogin != null)
 				return false;
 		} else if (!userlogin.equals(other.userlogin))
+			return false;
+		if (username == null) {
+			if (other.username != null)
+				return false;
+		} else if (!username.equals(other.username))
 			return false;
 		if (userpass == null) {
 			if (other.userpass != null)
@@ -767,8 +715,8 @@ public class User implements Serializable{
 				+ ", frozenBalance=" + frozenBalance + ", userStatus=" + userStatus + ", userlogin=" + userlogin
 				+ ", userpass=" + userpass + ", salt=" + salt + ", userModel=" + userModel + ", lastLoginErrorTime="
 				+ lastLoginErrorTime + ", loginErrorCount=" + loginErrorCount + ", islocked=" + islocked
-				+ ", firstLoginErrorTime=" + firstLoginErrorTime + ", yzmCode=" + yzmCode + ", userNickname="
-				+ userNickname + ", userEmail=" + userEmail + ", avatar=" + avatar + ", lastLoginIp=" + lastLoginIp
+				+ ", firstLoginErrorTime=" + firstLoginErrorTime + ", yzmCode=" + yzmCode + ", username=" + username
+				+ ", userEmail=" + userEmail + ", avatar=" + avatar + ", lastLoginIp=" + lastLoginIp
 				+ ", userActivationKey=" + userActivationKey + ", mobile=" + mobile + ", more=" + more + ", renzheng="
 				+ renzheng + ", erweima=" + erweima + ", poster=" + poster + ", mActivationPrice=" + mActivationPrice
 				+ ", zActivationPrice=" + zActivationPrice + ", fActivationPrice=" + fActivationPrice + ", highestId="
@@ -779,15 +727,8 @@ public class User implements Serializable{
 				+ ", userAgentId=" + userAgentId + ", isReal=" + isReal + ", collegeRankId=" + collegeRankId
 				+ ", etcRankId=" + etcRankId + ", idcard=" + idcard + ", realName=" + realName + ", carNum=" + carNum
 				+ ", Commission=" + Commission + ", cardOrderNum=" + cardOrderNum + ", zCommission=" + zCommission
-				+ ", agentpassword=" + agentpassword + ", txt=" + txt + ", createTime=" + createTime + ", createUser="
-				+ createUser + ", modifiedUser=" + modifiedUser + ", modifiedTime=" + modifiedTime + "]";
+				+ ", agentpassword=" + agentpassword + ", txt=" + txt + "]";
 	}
-	
-	
-	
-	
-	
-	
 	
 	
 	
